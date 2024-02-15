@@ -4,7 +4,7 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-<v-app theme="dark">
+<v-layout >
   <v-container class="main">
     <main>
     
@@ -16,7 +16,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <span>Meal Planner</span>&nbsp;- &copy;
     {{ new Date().getFullYear() }}
   </v-footer>
-</v-app>
+</v-layout>
 </template>
 
 <style scoped>
