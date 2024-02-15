@@ -1,6 +1,6 @@
 <script setup>
 import MealPlanner  from '@/components/MealPlanner.vue'
-import {useRecepeApi} from '@/composables/recipeApi.js'
+import {useRecepeApi, useRecipeInformation} from '@/composables/recipeApi.js'
 import { onMounted } from 'vue';
 
 async function results(){
@@ -8,9 +8,15 @@ async function results(){
    console.log(response);
 }
 
+async function info(id){
+   const response = await useRecipeInformation(id)
+   console.log(response);
+}
+
 //console.log(await response);
 onMounted(()=>{
    results()
+   info(716430)
 })
 
 </script>

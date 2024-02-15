@@ -11,7 +11,7 @@ function getRequestURI(path, query) {
   return `${apiPath}?${API_SIGN}${query}`
 }
 
-export async function useRecepeApi(path, options='') {
+export async function useRecepeApi(path, options = '') {
   const query = options.query ? getQuery(options.query) : ''
   const requestURI = getRequestURI(path, query)
   return useFetch(requestURI)
@@ -24,4 +24,21 @@ export async function useFetch(requestURI) {
   }
   const jsonRes = await res.json()
   return jsonRes
+}
+
+
+export async function useRecipeInformation (id) {
+    try {
+        return await useRecepeApi(`recipes/${id}/information`)
+    } catch {
+        throw new Error('An error occurred while trying to retrieve recipe information');
+    }
+}
+
+export async function useRecipeSearch (query) {
+    try {
+        return await useRecepeApi('recipes/search', { query })
+    } catch {
+        throw new Error('An error occurred while trying to search recipes');
+    }
 }
