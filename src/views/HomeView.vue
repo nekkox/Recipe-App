@@ -23,7 +23,7 @@ onMounted(()=>{
 
 <template>
  
-   <h1>hello</h1>
+   
    <MealPlanner>
 
    </MealPlanner>

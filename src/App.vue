@@ -1,24 +1,26 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import DefaultBar from '@/layouts/default/AppBar.vue'
+
 
 </script>
 
 <template>
-<v-layout >
-  <v-container class="main">
-    <main>
-    
+  <v-app theme="dark">
+
+    <DefaultBar />
+
+    <v-main>
+      <v-container>
       <RouterView />
-    
-    </main>
-  </v-container>
-  <v-footer app>
-    <span>Meal Planner</span>&nbsp;- &copy;
-    {{ new Date().getFullYear() }}
-  </v-footer>
-</v-layout>
+    </v-container>
+    </v-main>
+
+    <v-footer app>
+      <span>Meal Planner</span>&nbsp;- &copy;
+      {{ new Date().getFullYear() }}
+    </v-footer>
+  </v-app>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

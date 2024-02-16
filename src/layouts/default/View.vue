@@ -1,12 +1,11 @@
 <template>
+  
     <v-main>
-      <router-view />
-      <MealPlanner>
-        
-      </MealPlanner>
+ 
+      <RouterView />
     </v-main>
   </template>
   
   <script setup>
- import MealPlanner  from '@/components/MealPlanner.vue'
+
   </script>

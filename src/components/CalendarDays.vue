@@ -41,7 +41,7 @@ console.log(cards);
     </thead>
     <tbody>
       <tr v-for="card in cards" :key="card.date.toString()">
-      <td>  <Card :card="card"></Card></td>
+      <td class="py-4">  <Card :card="card"></Card></td>
       </tr>
 
     </tbody>
