@@ -1,4 +1,6 @@
 <script setup >
+import AppLink from '@/components/AppLink.vue'
+
 
 </script>
 <template>
@@ -9,9 +11,9 @@
 <v-list>
   <v-list-item>
     
-    <v-btn text block class="justify-start" ><router-link  to="/">Home</router-link>  </v-btn>
+    <v-btn text block class="justify-start" ><app-link to="/">Home</app-link>  </v-btn>
     
-    <v-btn text block ><router-link to="recipes">Recipes</router-link>  </v-btn>
+    <v-btn text block ><app-link to="recipes">Recipes</app-link>  </v-btn>
   </v-list-item>
 </v-list>
 </v-menu>

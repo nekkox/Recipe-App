@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import Card from '@/components/CalendarCard.vue'
+
 const props = defineProps({
   date: {
     type: Date,
@@ -13,6 +14,8 @@ const props = defineProps({
   }
 })
 
+const dialogVisible = ref(false)
+const dateSelected = ref(null)
 
 function generateCards(startDate, numberOfDays) {
   const cards = []
@@ -28,7 +31,16 @@ function generateCards(startDate, numberOfDays) {
 }
 
 const cards = ref(generateCards(props.date, props.days))
-console.log(cards);
+
+
+function recipeDialogOpen(card) {
+  dateSelected.value = card.date
+  dialogVisible.value = true
+}
+
+function recipeDialogClose() {
+  dialogVisible.value = false
+}
 </script>
 
 
@@ -41,11 +53,20 @@ console.log(cards);
     </thead>
     <tbody>
       <tr v-for="card in cards" :key="card.date.toString()">
-      <td class="py-4">  <Card :card="card"></Card></td>
+        <td class="py-4">
+          <Card :card="card" @day-selected="recipeDialogOpen"></Card>
+        </td>
       </tr>
-
     </tbody>
-
   </v-table>
+
+  <v-dialog v-model="dialogVisible" scrollable>
+    <v-card>
+      <v-card-title>Search for a recipe to add to this day</v-card-title>
+      <v-card-actions>
+        <v-btn color="primary" block @click="recipeDialogClose">Close</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
