@@ -37,7 +37,7 @@ export async function useRecipeInformation (id) {
 
 export async function useRecipeSearch (query) {
     try {
-        return await useRecepeApi('recipes/search', { query })
+        return await useRecepeApi('recipes/complexSearch', { query })
     } catch {
         throw new Error('An error occurred while trying to search recipes');
     }
