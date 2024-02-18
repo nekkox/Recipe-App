@@ -4,9 +4,8 @@
     <v-container>
         <v-row>
             <v-col>
-                xxx
                 <div>
-                    <v-progress-circular>
+                    <v-progress-circular indeterminate color="red">
 
                     </v-progress-circular>
                 </div>

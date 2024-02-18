@@ -1,7 +1,10 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRecipeInformation } from "@/composables/recipeApi"
+import { useCacheStore } from "@/stores/cache/index.js";
 import AppLoader from "@/components/AppLoader.vue"
+
+const store = useCacheStore();
 
 const props = defineProps({
     id: {
@@ -15,10 +18,10 @@ const props = defineProps({
 })
 
 const recipe = ref(null)
-const panel = ref(null)
+const panel = ref('instructions')
 
 onMounted(() => {
-    getRecipeDetails(props.activePanel);
+    getRecipeDetails(props.id);
 });
 
 async function getRecipeDetails(id) {
@@ -39,14 +42,14 @@ async function getRecipeDetails(id) {
                 {{ cuisine }}
             </v-chip>
             <v-expansion-panels variant="accordion" v-model="panel">
-                <v-expansion-panel>
+                <v-expansion-panel value="summary">
                     <v-expansion-panel-title class="text-h5">Summary</v-expansion-panel-title>
                     <v-expansion-panel-text>
                         <div v-html="recipe.summary" class="text-body-1"></div>
                     </v-expansion-panel-text>
                 </v-expansion-panel>
-                
-                <v-expansion-panel>
+
+                <v-expansion-panel value="instructions">
                     <v-expansion-panel-title class="text-h5">Instructions</v-expansion-panel-title>
                     <v-expansion-panel-text>
                         <div v-html="recipe.instructions" class="text-body-1"></div>
