@@ -25,9 +25,20 @@ onMounted(() => {
 });
 
 async function getRecipeDetails(id) {
-    const data = await useRecipeInformation(id.toString())
-    console.log(data);
-    recipe.value = data
+
+    const cacheKey = `recipe-details-${props.id}`;
+
+    if (store.cachedData(cacheKey)) {
+        recipe.value = store.cachedData(cacheKey)
+        console.log('Cached:', recipe.value);
+    } else {
+        const data = await useRecipeInformation(id.toString())
+        console.log('NOT cached:', data);
+        store.cacheData(cacheKey, data);
+        recipe.value = data
+    }
+
+
 }
 
 </script>
