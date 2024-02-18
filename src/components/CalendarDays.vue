@@ -51,12 +51,12 @@ function insertRecipeOnDay(recipe) {
   if (dateSelected.value) {
     cards.value = cards.value.map((card) => {
       if (card.date.getTime() === dateSelected.value.getTime()) {
-        
+
         let result = { ...card, today: [...card.today, recipe] }
         console.log('result', result);
         return result
       }
-      
+
       return card;
     })
     recipeDialogClose()
@@ -87,14 +87,8 @@ function removeRecipeFromDay(recipe, date) {
     <tbody>
       <tr v-for="card in cards" :key="card.date.toString()">
         <td class="py-4">
-          <CalendarCard 
-          :card="card" 
-          @daySelected="recipeDialogOpen"
-          @recipeRemoved="removeRecipeFromDay"
-          ></CalendarCard>
-
+          <CalendarCard :card="card" @daySelected="recipeDialogOpen" @recipeRemoved="removeRecipeFromDay"></CalendarCard>
         </td>
-
       </tr>
     </tbody>
   </v-table>

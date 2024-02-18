@@ -12,4 +12,4 @@ const props = defineProps({
     <RouterLink :to="props.to" class="text-red">
         <slot></slot>
     </RouterLink>
-    </template>
+</template>

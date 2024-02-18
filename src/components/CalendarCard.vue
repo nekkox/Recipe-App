@@ -5,11 +5,13 @@ const props = defineProps(['card'])
 
 const emits = defineEmits(['daySelected', "recipeRemoved"])
 
+//emiting to the CalendarDays which card has been selected by clicking a button
 function addRecipeToDay(card) {
     emits('daySelected', card)
     console.log('Card selected: ', card);
 }
 
+//emiting to the CalendarDays which recipe has been selected for removing by clicking a button
 function recipeRemoved(recipe, date) {
     emits("recipeRemoved", recipe, date);
 }
@@ -29,19 +31,20 @@ function recipeRemoved(recipe, date) {
     <v-col>
         <v-card v-for="today in card.today" :key="today.id" class="my-4">
             <v-card-title>
-<AppLink :to='`/recipe/${today.id}`'>{{ today.title }}</AppLink>
+                <AppLink :to='`/recipe/${today.id}`'>{{ today.title }}</AppLink>
             </v-card-title>
             <v-img width="200" :src=today.image></v-img>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn text icon="mdi-trash-can-outline" color="red" width="25" height="25" @click="recipeRemoved(today,card.date )"></v-btn>
+                <v-btn text icon="mdi-trash-can-outline" color="red" width="25" height="25"
+                    @click="recipeRemoved(today, card.date)"></v-btn>
 
             </v-card-actions>
         </v-card>
     </v-col>
 
 
-   <!--
+    <!--
         <v-col>
             <v-sheet v-if="card.today">
                 <div v-for="(rec, index) in card.today" :key="index" style="display: inline-flex;">
