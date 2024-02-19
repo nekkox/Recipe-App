@@ -1,19 +1,29 @@
 <script setup>
 import { useFormatDate } from '@/composables/formatters'
 import AppLink from '@/components/AppLink.vue'
+import {usePlannerStore} from '@/stores/planner/index'
+const store = usePlannerStore();
+
 const props = defineProps(['card'])
-console.log('xxx',props);
-const emits = defineEmits(['daySelected', "recipeRemoved"])
+//const emits = defineEmits(['daySelected', "recipeRemoved"])
+const emits = defineEmits(['daySelected'])
 
 //emiting to the CalendarDays which card has been selected by clicking a button
 function addRecipeToDay(card) {
     emits('daySelected', card)
-    console.log('Card selected: ', card);
 }
 
 //emiting to the CalendarDays which recipe has been selected for removing by clicking a button
+/*
 function recipeRemoved(recipe, date) {
     emits("recipeRemoved", recipe, date);
+}
+*/
+
+function removeFromDay(recipe){
+    const { id, date } = recipe;
+    store.removeRecipeByIdDate({ id, date });
+    console.log('Recipe removed: ', id, ' - ', date );
 }
 </script>
 
@@ -35,9 +45,9 @@ function recipeRemoved(recipe, date) {
             </v-card-title>
             <v-img width="200" :src=today.image></v-img>
             <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-spacer></v-spacer>{{  console.log('TEST: ', today.id, card.date ) }} 
                 <v-btn text icon="mdi-trash-can-outline" color="red" width="25" height="25"
-                    @click="recipeRemoved(today, card.date)"></v-btn>
+                    @click="removeFromDay({id: today.id, date: card.date})"></v-btn>
 
             </v-card-actions>
         </v-card>

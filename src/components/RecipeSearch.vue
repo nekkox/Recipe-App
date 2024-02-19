@@ -22,6 +22,7 @@ function debouncedSearch() {
 //Getting results from api
 async function getSearchResults() {
     const result = await useRecipeSearch(searchQuery.value)
+    console.log(result);
     searchResults.value = result.results
 }
 

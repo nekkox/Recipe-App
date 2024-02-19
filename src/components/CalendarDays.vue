@@ -28,6 +28,8 @@ const props = defineProps({
 const dialogVisible = ref(false)
 const dateSelected = ref(null)
 
+
+//Generate cards for each day. Using global recipe database from Pinia for each day(comparig dates)
 function generateCards(startDate, numberOfDays) {
   const cards = []
   const currentDate = new Date(startDate)
@@ -37,9 +39,11 @@ function generateCards(startDate, numberOfDays) {
  
   
     const content = `Card ${i + 1}`
-    const today = []
-    //Flter all reciped and pick only ones with the same date.
+    //const today = []
+    //Flter all recipes stored by Pinia in global table and pick only ones with the same date as the Day table.
     const recipesThisDay = props.recipes.filter((recipe) => {
+      
+      //reset time to zeros
       const recipeDate = new Date(recipe.date).setHours(0, 0, 0, 0);
       return recipeDate === date.setHours(0, 0, 0, 0);
     })
@@ -64,9 +68,17 @@ function recipeDialogClose() {
 }
 
 function insertRecipeOnDay(recipe) {
+  console.log('SELECTED RECEPE:', recipe);
+  //if day with dateSelected exists, then the recipe will be added to that day (into global store)
   if (dateSelected.value) {
+
+    //add picked recipe with day's date to Pania storege
     store.addRecipe({ ...recipe, date: dateSelected.value });
+
+    //upddate card to show added recipe
     cards.value = cards.value.map((card) => {
+
+      //pick card only with the samedateSelected so we can add another recipe to recipe's table
       if (card.date.getTime() === dateSelected.value.getTime()) {
 
         let result = { ...card, today: [...card.today, recipe] }
