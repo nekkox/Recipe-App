@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import CalendarCard from '@/components/CalendarCard.vue'
 import RecipeSearch from '@/components/RecipeSearch.vue'
 
+import { usePlannerStore } from "@/stores/planner";
+const store = usePlannerStore();
+
 const props = defineProps({
   date: {
     type: Date,
@@ -12,7 +15,12 @@ const props = defineProps({
     type: Number,
     required: true,
     default: 7
-  }
+  },
+  recipes: {
+    type: Array,
+    required: false,
+    value: [],
+  },
 })
 
 
@@ -25,10 +33,18 @@ function generateCards(startDate, numberOfDays) {
   const currentDate = new Date(startDate)
 
   for (let i = 0; i < numberOfDays; i++) {
-    const date = new Date(currentDate.getTime())
+    const date = new Date(currentDate)
+ 
+  
     const content = `Card ${i + 1}`
     const today = []
-    cards.push({ date, content, today })
+    //Flter all reciped and pick only ones with the same date.
+    const recipesThisDay = props.recipes.filter((recipe) => {
+      const recipeDate = new Date(recipe.date).setHours(0, 0, 0, 0);
+      return recipeDate === date.setHours(0, 0, 0, 0);
+    })
+
+    cards.push({ date, content, today: recipesThisDay })
     currentDate.setDate(currentDate.getDate() + 1)
   }
   return cards
@@ -49,6 +65,7 @@ function recipeDialogClose() {
 
 function insertRecipeOnDay(recipe) {
   if (dateSelected.value) {
+    store.addRecipe({ ...recipe, date: dateSelected.value });
     cards.value = cards.value.map((card) => {
       if (card.date.getTime() === dateSelected.value.getTime()) {
 

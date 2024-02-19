@@ -16,6 +16,7 @@ export const useFormatDate = (date) => {
   
     const day = date.getDate();
     const month = date.toLocaleString("default", { month: "long" });
+   
     const ordinal = getSuffix(day);
    
     return `${day}${ordinal} of ${month}`;

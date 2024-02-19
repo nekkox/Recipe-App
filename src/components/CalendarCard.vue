@@ -2,7 +2,7 @@
 import { useFormatDate } from '@/composables/formatters'
 import AppLink from '@/components/AppLink.vue'
 const props = defineProps(['card'])
-
+console.log('xxx',props);
 const emits = defineEmits(['daySelected', "recipeRemoved"])
 
 //emiting to the CalendarDays which card has been selected by clicking a button

@@ -6,13 +6,11 @@ const emits = defineEmits(['recipeSelected'])
 
 const searchQuery = ref('')
 const searchResults = ref([])
-
-async function getSearchResults() {
-    const result = await useRecipeSearch(searchQuery.value)
-    searchResults.value = result.results
-}
-
 let timeout = null
+
+
+//Watch searchQuery and when it changes debouncedSearch function is run to get search results
+watch(searchQuery, () => debouncedSearch())
 
 function debouncedSearch() {
     clearTimeout(timeout)
@@ -21,8 +19,12 @@ function debouncedSearch() {
     }, 500)
 }
 
+//Getting results from api
+async function getSearchResults() {
+    const result = await useRecipeSearch(searchQuery.value)
+    searchResults.value = result.results
+}
 
-watch(searchQuery, () => debouncedSearch())
 
 function recipeSelected(result) {
     emits('recipeSelected', result)
