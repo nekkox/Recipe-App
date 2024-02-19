@@ -1,12 +1,15 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 export const usePlannerStore = defineStore('planner', () => {
   const recipes = ref(useLocalStorage('planner', []))
 
   function addRecipe(recipe) {
     recipes.value.push(recipe)
+    console.log('Adding recepe: ', recipe)
+    console.log('sorting')
+    recipesSortedByDate()
   }
 
   const removeRecipeByIdDate = (options) => {
@@ -18,5 +21,26 @@ export const usePlannerStore = defineStore('planner', () => {
     )
     recipes.value.splice(recipeIndex, 1)
   }
-  return { recipes, addRecipe, removeRecipeByIdDate }
+
+  function recipesSortedByDate() {
+    recipes.value.sort((a, b) => (new Date(a.date).getTime() < new Date(b.date).getTime() ? -1 : 1))
+  }
+
+  const pastRecipes = computed(() => {
+    const sorted = recipesSortedByDate()
+    return sorted.filter((recipe) => {
+      const date = new Date(recipe.date)
+      return date < new Date()
+    })
+  })
+
+  const futureRecipes = computed(() => {
+    const sorted = recipesSortedByDate()
+    return sorted.filter((recipe) => {
+      const date = new Date(recipe.date)
+      return date >= new Date()
+    })
+  })
+
+  return { recipes, addRecipe, removeRecipeByIdDate, pastRecipes, futureRecipes }
 })
