@@ -1,10 +1,22 @@
-# food-app
+# superhero-app
 
-This template should help get you started developing with Vue 3 in Vite.
+Meal planner where you can browse recipes to add them to a weekly calendar
+This project is simple app that is fetching data from Food Recepies Api.  
+Data is locally stored inside LocalStorage.
+
+---
+
+## Tchnologies
+- Vue 3
+- Vue-Router
+- Vuetifyjs
+- Vite
+- Pinia
+
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+[VSCode](https://code.visualstudio.com/) 
 
 ## Customize configuration
 
@@ -28,8 +40,9 @@ npm run dev
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+![alt text](image.png)
 
-```sh
-npm run lint
-```
+![alt text](image-1.png)
+
+
+![alt text](image-2.png)
