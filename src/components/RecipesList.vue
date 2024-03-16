@@ -47,7 +47,6 @@ console.log(pastRecipes);
 </script>
 
 <template>
-   
     <div v-if="pastRecipes.length === 0 && futureRecipes.length === 0">
         No recipes yet. Add some to your planner!
     </div>

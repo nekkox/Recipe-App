@@ -6,5 +6,5 @@ const recipeId = Number(router.currentRoute.value.params.id);
 </script>
 
 <template>
-<CookingInstructions :id="recipeId" :active-panel="1" />
+    <CookingInstructions :id="recipeId" :active-panel="1" />
 </template>
