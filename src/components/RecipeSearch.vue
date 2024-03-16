@@ -36,8 +36,7 @@ function recipeSelected(result) {
 <template>
     <v-card>
         <v-card-text>
-            <v-text-field v-model="searchQuery" label="Search">
-            </v-text-field>
+            <v-text-field v-model="searchQuery" label="Search"></v-text-field>
         </v-card-text>
         <v-divider></v-divider>
         <v-list v-if="searchResults">

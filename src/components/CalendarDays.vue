@@ -3,8 +3,13 @@ import { ref } from 'vue'
 import CalendarCard from '@/components/CalendarCard.vue'
 import RecipeSearch from '@/components/RecipeSearch.vue'
 
+import { useRecipeInformation } from "@/composables/recipeApi";
+
 import { usePlannerStore } from "@/stores/planner";
 const store = usePlannerStore();
+
+import { useCacheStore } from "@/stores/cache";
+const cacheStore = useCacheStore();
 
 const props = defineProps({
   date: {
@@ -24,11 +29,6 @@ const props = defineProps({
 })
 
 
-
-const dialogVisible = ref(false)
-const dateSelected = ref(null)
-
-
 //Generate cards for each day. Using global recipe database from Pinia for each day(comparig dates)
 function generateCards(startDate, numberOfDays) {
   const cards = []
@@ -37,7 +37,6 @@ function generateCards(startDate, numberOfDays) {
   for (let i = 0; i < numberOfDays; i++) {
     const date = new Date(currentDate)
  
-  
     const content = `Card ${i + 1}`
     //const today = []
     //Flter all recipes stored by Pinia in global table and pick only ones with the same date as the Day table.
@@ -56,6 +55,9 @@ function generateCards(startDate, numberOfDays) {
 
 const cards = ref(generateCards(props.date, props.days))
 
+const dialogVisible = ref(false)
+const dateSelected = ref(null)
+
 
 function recipeDialogOpen(card) {
   dateSelected.value = card.date
@@ -65,8 +67,18 @@ function recipeDialogOpen(card) {
 
 function recipeDialogClose() {
   dialogVisible.value = false
+  dateSelected.value = null;
 }
 
+const preloadRecipe = async (id) => {
+  const cacheKey = `recipe-details-${id}`;
+  if (!cacheStore.cachedData(cacheKey)) {
+    const data = await useRecipeInformation(id.toString())
+    cacheStore.cacheData(cacheKey, data);
+  }
+};
+
+/*
 function insertRecipeOnDay(recipe) {
   console.log('SELECTED RECEPE:', recipe);
   //if day with dateSelected exists, then the recipe will be added to that day (into global store)
@@ -91,7 +103,17 @@ function insertRecipeOnDay(recipe) {
     recipeDialogClose()
   }
 }
+*/
 
+const insertRecipeOnDay = (recipe) => {
+  if (dateSelected.value) {
+    preloadRecipe(recipe.id);
+    store.addRecipe({ ...recipe, date: dateSelected.value });
+    recipeDialogClose();
+  }
+};
+
+/*
 function removeRecipeFromDay(recipe, date) {
   cards.value = cards.value.map((card) => {
     if (card.date.getTime() === date.getTime()) {
@@ -103,6 +125,8 @@ function removeRecipeFromDay(recipe, date) {
     return card;
   });
 };
+
+*/
 </script>
 
 
@@ -116,7 +140,7 @@ function removeRecipeFromDay(recipe, date) {
     <tbody>
       <tr v-for="card in cards" :key="card.date.toString()">
         <td class="py-4">
-          <CalendarCard :card="card" @daySelected="recipeDialogOpen" @recipeRemoved="removeRecipeFromDay"></CalendarCard>
+          <CalendarCard :card="card" @daySelected="recipeDialogOpen" />
         </td>
       </tr>
     </tbody>

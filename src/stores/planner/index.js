@@ -10,7 +10,7 @@ export const usePlannerStore = defineStore('planner', () => {
 
 
   function recipesSortedByDate() {
-    recipes.value.sort((a, b) => (new Date(a.date).getTime() < new Date(b.date).getTime() ? -1 : 1))
+   return recipes.value.sort((a, b) => (new Date(a.date).getTime() < new Date(b.date).getTime() ? -1 : 1))
   }
 
   const pastRecipes = computed(() => {
@@ -33,6 +33,8 @@ export const usePlannerStore = defineStore('planner', () => {
     recipes.value.push(recipe)
     console.log('Adding recepe: ', recipe)
     console.log('sorting')
+    console.log('RECIPES:', recipes.value);
+    console.log(recipesSortedByDate());
     recipesSortedByDate()
   }
 

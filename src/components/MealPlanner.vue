@@ -7,9 +7,8 @@ const store = usePlannerStore();
 const { recipes } = storeToRefs(store);
 
 console.log('recipies:', store);
-const date = new Date().getDate()
+console.log('recipies2:', recipes);
 
-const month = date.toLocaleString("default", { month: "long" })
 
 
 </script>

@@ -18,7 +18,7 @@ const saveRating = () => {
     <v-rating
       v-model="rating"
       color="light-green"
-      :readonly="readonly"
+      :readonly=false
       half-increments
       item-aria-label="This item is rated {0} of {1}"
       hover

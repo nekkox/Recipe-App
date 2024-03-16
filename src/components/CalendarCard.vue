@@ -2,8 +2,8 @@
 import { useFormatDate } from '@/composables/formatters'
 import AppLink from '@/components/AppLink.vue'
 import {usePlannerStore} from '@/stores/planner/index'
-const store = usePlannerStore();
 
+const store = usePlannerStore();
 const props = defineProps(['card'])
 //const emits = defineEmits(['daySelected', "recipeRemoved"])
 const emits = defineEmits(['daySelected'])
@@ -20,8 +20,8 @@ function recipeRemoved(recipe, date) {
 }
 */
 
-function removeFromDay(recipe){
-    const { id, date } = recipe;
+function removeFromDay(recipes){
+    const { id, date } = recipes;
     store.removeRecipeByIdDate({ id, date });
     console.log('Recipe removed: ', id, ' - ', date );
 }
@@ -30,19 +30,21 @@ function removeFromDay(recipe){
 <template>
     <v-sheet class="d-flex justify-space-between">
         <v-sheet class="ma-2 pa-2">
-            <h2 class="text-h5">{{ useFormatDate(card.date) }}</h2>
+            <h2 class="text-h5">{{ useFormatDate(props.card.date) }}</h2>
         </v-sheet>
         <v-sheet class="ma-2 pa-2">
-            <v-btn text icon="mdi-plus" color="blue" width="25" height="25" @click="addRecipeToDay(card)"></v-btn>
+            <v-btn text icon="mdi-plus" color="blue" width="25" height="25" @click="addRecipeToDay(props.card)"></v-btn>
         </v-sheet>
     </v-sheet>
 
 
     <v-col>
-        <v-card v-for="today in card.today" :key="today.id" class="my-4">
+        <v-card v-for="today in props.card.today" :key="today.id" class="my-4">
             <v-card-title>
                 <AppLink :to='`/recipe/${today.id}`'>{{ today.title }}</AppLink>
             </v-card-title>
+            <v-card-text></v-card-text>
+
             <v-img width="200" :src=today.image></v-img>
             <v-card-actions>
                 <v-spacer></v-spacer>{{  console.log('TEST: ', today.id, card.date ) }} 

@@ -24,8 +24,6 @@ onMounted(()=>{
 <template>
  
    
-   <MealPlanner>
-
-   </MealPlanner>
+   <MealPlanner />
 
 </template>
