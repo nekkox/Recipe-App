@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { useRecipeInformation } from "@/composables/recipeApi"
 import { useCacheStore } from "@/stores/cache/index.js";
 import AppLoader from "@/components/AppLoader.vue"
+import RecipeRating from "./RecipeRating.vue";
 
 const store = useCacheStore();
 
@@ -49,6 +50,9 @@ async function getRecipeDetails(id) {
         <v-col>
             <v-img height="200" :src="recipe.image" cover v-if="recipe.image" />
             <h1 class="text-h3 ma-4">{{ recipe.title }}</h1>
+
+            <RecipeRating :id="recipe.id"/>
+
             <v-chip class="ma-2 my-4" color="primary" v-for="cuisine in recipe.cuisines" :key="cuisine">
                 {{ cuisine }}
             </v-chip>

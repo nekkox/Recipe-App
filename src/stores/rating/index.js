@@ -12,7 +12,7 @@ console.log(ratings);
         return rating ? rating.rating : undefined;
     };
 
-    const saveRating = (rating) => {
+    const saveRating = (rating={}) => {
         const ratingIndex = ratings.value.findIndex((r) => r.id === rating.id);
         if (ratingIndex === -1) {
             ratings.value.push(rating);
